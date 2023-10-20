@@ -5,7 +5,7 @@ from config.config import get_db_url
 
 
 class Database:
-    def __init__(self, db_url = get_db_url()):
+    def __init__(self, db_url=get_db_url()):
         self.DB_URL = db_url
 
         if db_url[:6] != "sqlite":
@@ -25,7 +25,7 @@ class Database:
         finally:
             db.close_all()
 
-app_db = Database()
+#app_db = Database()
 
 """DB_URL = get_db_url()   # "sqlite:///../postgres/persons.db"
 
