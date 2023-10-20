@@ -40,7 +40,7 @@ app.include_router(PersonRouter, prefix='/api/v1/persons')
 app.openapi = get_openapi_schema
 
 if __name__ == "__main__":
-    app_db.create_all()    #Base.metadata.create_all(bind=engine)
+    #app_db.create_all()    #Base.metadata.create_all(bind=engine)
     settings = get_settings()
     uvicorn.run('main:app',
                 host=settings['persons_app']['host'],
