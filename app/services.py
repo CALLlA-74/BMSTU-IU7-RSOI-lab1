@@ -2,9 +2,7 @@ from models import Person
 from sqlalchemy.orm import Session
 from schemas import PersonDTO
 from fastapi import status
-from fastapi.responses import Response
 from fastapi.exceptions import HTTPException
-from responses import ResponsesEnum
 
 
 def create_person(data: PersonDTO, db: Session):

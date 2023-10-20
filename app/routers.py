@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status
 from fastapi.responses import Response
 from sqlalchemy.orm import Session
 #from database import get_db
-from database import app_db
+from database.database import app_db
 
 import services as PersonService
 from schemas import PersonDTO
