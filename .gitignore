@@ -567,7 +567,7 @@ target_wrapper.*
 # QtCreator CMake
 CMakeLists.txt.user*
 
-# QtCreator 4.8< compilation database
+# QtCreator 4.8< compilation config
 
 # QtCreator local machine specific files for imported projects
 *creator.user*
@@ -1015,7 +1015,7 @@ publish/
 *.[Pp]ublish.xml
 *.azurePubxml
 # Note: Comment the next line if you want to checkin your web deploy settings,
-# but database connection strings (with potential passwords) will be unencrypted
+# but config connection strings (with potential passwords) will be unencrypted
 *.pubxml
 *.publishproj
 
@@ -1179,7 +1179,7 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
-# BeatPulse healthcheck temp database
+# BeatPulse healthcheck temp config
 healthchecksdb
 
 # Backup folder for Package Reference Convert tool in Visual Studio 2017

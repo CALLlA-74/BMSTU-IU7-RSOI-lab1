@@ -1,0 +1,172 @@
+---
+openapi: 3.1.0
+info:
+  title: OpenAPI definition
+  version: v1
+servers:
+- url: http://111.222.0.3:8080/
+- url: http://localhost:8080/
+paths:
+  "/api/v1/persons/":
+    get:
+      tags:
+      - Person REST API operations
+      summary: Get All Persons
+      operationId: get_all_persons_api_v1_persons__get
+      responses:
+        '200':
+          description: All Persons
+          content:
+            application/json:
+              schema:
+                items:
+                  "$ref": "#/components/schemas/PersonDTO"
+                type: array
+                title: Response 200 Get All Persons Api V1 Persons  Get
+    post:
+      tags:
+      - Person REST API operations
+      summary: Create Person
+      operationId: create_person_api_v1_persons__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+              - "$ref": "#/components/schemas/PersonDTO"
+              title: Data
+      responses:
+        '201':
+          description: Created new Person
+          headers:
+            Location:
+              description: Path to new Person
+              style: simple
+              schema:
+                type: string
+        '400':
+          description: Invalid data
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ValidationErrorResponse"
+  "/api/v1/persons/{id}":
+    get:
+      tags:
+      - Person REST API operations
+      summary: Get Person
+      operationId: get_person_api_v1_persons__id__get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Id
+      responses:
+        '200':
+          description: Person by ID
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PersonDTO"
+        '404':
+          description: Not found Person by ID
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+    patch:
+      tags:
+      - Person REST API operations
+      summary: Update Person
+      operationId: update_person_api_v1_persons__id__patch
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+              - "$ref": "#/components/schemas/PersonDTO"
+              title: Data
+      responses:
+        '200':
+          description: Person by ID was updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PersonDTO"
+        '400':
+          description: Invalid data
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ValidationErrorResponse"
+        '404':
+          description: Not found Person by ID
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+      - Person REST API operations
+      summary: Delete Person
+      operationId: delete_person_api_v1_persons__id__delete
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Id
+      responses:
+        '204':
+          description: Person for ID was removed
+components:
+  schemas:
+    ErrorResponse:
+      properties: {}
+      type: object
+      title: ErrorResponse
+      example:
+        message: not found
+    PersonDTO:
+      properties:
+        name:
+          type: string
+          title: Name
+        age:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Age
+        address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address
+        work:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Work
+      type: object
+      required:
+      - name
+      title: PersonDTO
+    ValidationErrorResponse:
+      properties: {}
+      type: object
+      title: ValidationErrorResponse
+      errors:
+      - loc: error location
+        msg: error message
+        type: type of error
+      message: Invalid request

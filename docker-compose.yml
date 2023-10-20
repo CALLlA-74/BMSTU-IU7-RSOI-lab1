@@ -1,18 +1,39 @@
 version: "3"
 services:
-  postgres:
-    image: library/postgres:13
-    container_name: postgres
-    restart: on-failure
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB: postgres
-    volumes:
-      - db-data:/var/lib/postgresql/data
-      - ./postgres/:/docker-entrypoint-initdb.d/
+  database:
+    image: library/postgres:16-alpine
+    #restart: on-failure
     ports:
       - "5432:5432"
+    environment:
+      - POSTGRES_USER=program
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=persons_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      #- ./postgres/:/docker-entrypoint-initdb.d/
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U program"]
+      interval: 2s
+      timeout: 2s
+      retries: 1
+
+  person_service:
+    build: .
+    depends_on:
+      database:
+        condition: service_healthy
+    #environment:
+      #WAIT_HOSTS: database:5432
+    ports:
+      - "8080:8080"
+    networks:
+      - default
 
 volumes:
   db-data:
+
+networks:
+  default:

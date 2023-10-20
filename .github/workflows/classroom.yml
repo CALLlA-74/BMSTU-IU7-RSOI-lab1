@@ -8,33 +8,34 @@ on:
       - master
 jobs:
   build:
-    name: Autograding
+    name: Run unit tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      # TODO build, test and deploy project
-
-      - name: Run API Tests
-        uses: matt-ball/newman-action@master
+        
+      - name: Set up python-3.10 and install packages
+        uses: actions/setup-python@v4
         with:
-          collection: postman/[inst] Lab1.postman_collection.json
-          environment: postman/[inst][heroku] Lab1.postman_environment.json
-          delayRequest: 100
-          reporters: '[ "cli" ]'
-
-      - name: Autograding
-        uses: education/autograding@v1
-        continue-on-error: true
-
-      - name: Github auto grader mark
-        uses: Romanow/google-sheet-autograder-marker@v1.0
-        with:
-          google_token: ${{secrets.GOOGLE_API_KEY}}
-          sheet_id: "1xkgjUX6Qmk7rdJG-QPOToav-HWWtthJjnShIKnw3oIY"
-          homework_number: 1
-          user_column: 'D'
-          column_offset: 'F'
-          mark: "'+"
+          python-version: '3.10'
+        run: pip3.10 install -r requirements.txt
+        
+      - name: Run unit tests
+        run: pytest -vs app/unit_tests/unit_tests.py
+          
+    
+    #name: Run API Tests
+    #runs-on: ubuntu-latest
+    #steps:
+    #  - uses: actions/checkout@v4
+    #    with:
+    #      fetch-depth: 0
+    #
+    #  - name: Run API Tests
+    #    uses: matt-ball/newman-action@master
+    #    with:
+    #      collection: postman/[inst] Lab1.postman_collection.json
+    #      environment: postman/[inst][heroku] Lab1.postman_environment.json
+    #      delayRequest: 100
+    #      reporters: '[ "cli" ]'
