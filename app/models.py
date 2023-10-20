@@ -1,8 +1,8 @@
 from sqlalchemy import Integer, String, Column
-from database import app_db     # Base
+from database import Base     # app_db
 
 
-class Person(app_db.Base):
+class Person(Base):
     __tablename__ = 'persons'
     __table_args__ = {'extend_existing': True}
 

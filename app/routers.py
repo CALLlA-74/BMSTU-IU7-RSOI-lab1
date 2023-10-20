@@ -2,13 +2,15 @@ from fastapi import APIRouter, Depends, status
 from fastapi.responses import Response
 from sqlalchemy.orm import Session
 #from database import get_db
-from database import app_db
+from AppDatabase import AppDatabase
+#from database import Database
 
 import services as PersonService
 from schemas import PersonDTO
 from responses import ResponsesEnum
 
 router = APIRouter(prefix='', tags=['Person REST API operations'])
+app_db = AppDatabase.app_db
 
 
 @router.get('/', status_code=status.HTTP_200_OK,

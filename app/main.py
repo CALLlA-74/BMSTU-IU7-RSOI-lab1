@@ -1,7 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
-from database import app_db   #engine, Base
+from AppDatabase import AppDatabase  #engine, Base
+
 from routers import router as PersonRouter
 from config.config import get_settings
 
@@ -38,9 +39,10 @@ app = FastAPI(title="OpenAPI definition",
                        {"url": "http://localhost:8080"}])
 app.include_router(PersonRouter, prefix='/api/v1/persons')
 app.openapi = get_openapi_schema
+app_db = AppDatabase.app_db
 
 if __name__ == "__main__":
-    #app_db.create_all()    #Base.metadata.create_all(bind=engine)
+    app_db.create_all()    #Base.metadata.create_all(bind=engine)
     settings = get_settings()
     uvicorn.run('main:app',
                 host=settings['persons_app']['host'],
