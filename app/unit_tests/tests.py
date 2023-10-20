@@ -9,7 +9,7 @@ import services as PersonService
 
 persons = deepcopy(PersonsMock.mocks)
 correct_persons = {}
-test_db = Database("sqlite:///../test_db/persons.db")
+test_db = Database("sqlite://../test_db/persons.db")
 test_db.create_all()
 
 
