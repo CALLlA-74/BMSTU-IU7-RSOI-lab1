@@ -24,7 +24,7 @@ jobs:
         run: pip3.10 install -r requirements.txt
         
       - name: Run unit tests
-        run: pytest -vs app/unit_tests/unit_tests.py
+        run: pytest -vs app/unit_tests/tests.py
           
     
     #name: Run API Tests
