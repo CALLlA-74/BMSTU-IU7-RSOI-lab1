@@ -1,6 +1,6 @@
-from models.models import Person
+from models import Person
 from sqlalchemy.orm import Session
-from schemas.schemas import PersonDTO
+from schemas import PersonDTO
 from fastapi import status
 from fastapi.exceptions import HTTPException
 

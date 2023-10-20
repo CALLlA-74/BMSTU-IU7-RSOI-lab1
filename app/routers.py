@@ -2,11 +2,11 @@ from fastapi import APIRouter, Depends, status
 from fastapi.responses import Response
 from sqlalchemy.orm import Session
 #from database import get_db
-from database.database import app_db
+from database import app_db
 
-from services import services as PersonService
-from schemas.schemas import PersonDTO
-from responses.responses import ResponsesEnum
+import services as PersonService
+from schemas import PersonDTO
+from responses import ResponsesEnum
 
 router = APIRouter(prefix='', tags=['Person REST API operations'])
 
