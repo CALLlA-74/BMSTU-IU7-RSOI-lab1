@@ -25,7 +25,8 @@ class Database:
         finally:
             db.close_all()
 
-#app_db = Database()
+
+app_db = Database()
 
 """DB_URL = get_db_url()   # "sqlite:///../postgres/persons.db"
 
