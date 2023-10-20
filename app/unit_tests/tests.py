@@ -1,11 +1,11 @@
 from copy import deepcopy
 
-from .mock_data import PersonsMock
+from mock_data.mock_data import PersonsMock
 from database.database import Database
-from schemas import PersonDTO
+from schemas.schemas import PersonDTO
 from fastapi.exceptions import HTTPException
 from fastapi import status
-import services as PersonService
+from services import services as PersonService
 
 persons = deepcopy(PersonsMock.mocks)
 correct_persons = {}

@@ -4,9 +4,9 @@ from sqlalchemy.orm import Session
 #from database import get_db
 from database.database import app_db
 
-import services as PersonService
-from schemas import PersonDTO
-from responses import ResponsesEnum
+from services import services as PersonService
+from schemas.schemas import PersonDTO
+from responses.responses import ResponsesEnum
 
 router = APIRouter(prefix='', tags=['Person REST API operations'])
 

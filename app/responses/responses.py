@@ -1,6 +1,6 @@
 from enum import Enum
-from schemas import PersonDTO, ValidationErrorResponse, ErrorResponse
-from models import Person as PersonModel
+from schemas.schemas import PersonDTO, ValidationErrorResponse, ErrorResponse
+from models.models import Person as PersonModel
 
 
 class ResponsesEnum(Enum):
