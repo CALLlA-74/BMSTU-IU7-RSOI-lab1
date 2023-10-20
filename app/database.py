@@ -9,6 +9,7 @@ Base = declarative_base()
 class Database:
     def __init__(self, db_url=get_db_url()):
         self.DB_URL = db_url
+        print("URL: " + db_url)
 
         if db_url[:6] != "sqlite":
             self.engine = create_engine(self.DB_URL)
