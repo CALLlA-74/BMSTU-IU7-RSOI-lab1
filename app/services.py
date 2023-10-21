@@ -56,7 +56,7 @@ def update_person(data: PersonDTO, id: int, db: Session):
 
 
 def delete_person(id: int, db: Session):
-    person = db.query(Person).filter(Person.id == id).delete()
+    num_of_removed_rows = db.query(Person).filter(Person.id == id).delete()
     db.commit()
 
-    return person
+    return num_of_removed_rows

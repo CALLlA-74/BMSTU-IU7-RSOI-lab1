@@ -85,9 +85,9 @@ async def test_get_by_id_not_found():
 async def test_delete_by_id_success():
     try:
         ids = list(correct_persons.keys())
-        person = PersonService.delete_person(ids[0], test_db).get_json_model()
-        assert check_equality(person, correct_persons[ids[0]]), 'Error in deleting person: equality error: ' \
-                                                                + str(person) + ' != ' + str(correct_persons[ids[0]])
+        num_of_rem_rows = PersonService.delete_person(ids[-1], test_db).get_json_model()
+        assert num_of_rem_rows == 1, 'Error in deleting person: number of removed persons is not 1: ' \
+                                     + str(num_of_rem_rows)
     except Exception as e:
         assert False, 'Exception in deleting person: ' + str(e)
 
