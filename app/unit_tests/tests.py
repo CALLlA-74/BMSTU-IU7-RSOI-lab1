@@ -21,7 +21,7 @@ def check_equality(a: dict, b: dict):
 
 
 def init_db(database: Database, init_data: list):
-    db = database.get_db().asend(None)
+    db = next(database.get_db())
     for data in init_data:
         person_dto = PersonDTO(
             name=data['name'],
