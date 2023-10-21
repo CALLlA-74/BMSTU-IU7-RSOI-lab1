@@ -1,7 +1,7 @@
 from copy import deepcopy
 
 from unit_tests.mock_data import PersonsMock
-from database import Database
+from database.database import Database
 from schemas import PersonDTO
 from fastapi.exceptions import HTTPException
 from fastapi import status
@@ -9,7 +9,7 @@ import services as PersonService
 
 persons = deepcopy(PersonsMock.mocks)
 correct_persons = {}
-test_db = Database("sqlite:///../test_db/persons.db")
+test_db = Database("sqlite:///test_persons.db")
 test_db.create_all()
 
 

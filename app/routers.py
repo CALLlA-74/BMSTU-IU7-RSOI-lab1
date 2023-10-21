@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status
 from fastapi.responses import Response
 from sqlalchemy.orm import Session
 #from database import get_db
-from AppDatabase import AppDatabase
+from database.AppDatabase import AppDatabase
 #from database import Database
 
 import services as PersonService

@@ -1,8 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
-from AppDatabase import AppDatabase  #engine, Base
-
+from database.AppDatabase import AppDatabase  #engine, Base
 from routers import router as PersonRouter
 from config.config import get_settings
 
