@@ -31,7 +31,7 @@ def init_db(db: Session, init_data: list):
             work=data['work']
         )
         person = PersonService.create_person(person_dto, db).get_json_model()
-        assert check_equality(person, data), print('Initial error: ' + person + " != " + data)
+        assert check_equality(person, data), 'Initial error: ' + str(person) + " != " + str(data)
         data['id'] = person['id']
 
 
@@ -52,8 +52,8 @@ async def test_get_all_persons_success():
         for idx in range(len(all_persons)):
             person = all_persons[idx].get_json_model()
             assert check_equality(person, correct_persons[
-                person['id']]), 'Error getting all persons: equality error ' + person + ' ' + correct_persons[
-                person['id']]
+                person['id']]), 'Error getting all persons: equality error ' + str(person) + ' ' \
+                                + str(correct_persons[person['id']])
     except Exception as e:
         assert False, 'Exception getting all persons: ' + str(e)
 
@@ -63,7 +63,8 @@ async def test_get_by_id_success():
         for person in persons:
             recieved_person = PersonService.get_person(person['id'], test_db).get_json_model()
             assert (check_equality(recieved_person, person),
-                    'Error in getting person by id (success): equality error ' + recieved_person + ' ' + correct_persons[person['id']])
+                    'Error in getting person by id (success): equality error ' + str(recieved_person) + ' '
+                    + str(correct_persons[person['id']]))
     except Exception as e:
         assert False, 'Exception in getting all person by id (success): ' + str(e)
 
@@ -75,7 +76,7 @@ async def test_get_by_id_not_found():
     except HTTPException as e:
         if e.status_code == status.HTTP_404_NOT_FOUND:
             assert True
-        assert False, 'HTTPException in getting all person by id (not_found): HTTPException is not 404: ' + e.detail
+        assert False, 'HTTPException in getting all person by id (not_found): HTTPException is not 404: ' + str(e.detail)
     except Exception as e:
         assert False, 'Exception in getting all person by id (not_found): ' + str(e)
 
@@ -85,7 +86,7 @@ async def test_delete_by_id_success():
         ids = correct_persons.keys()
         person = PersonService.delete_person(ids[0], test_db).get_json_model()
         assert (check_equality(person, correct_persons[ids[0]]),
-                'Error in deleting person: equality error: ' + person + ' != ' + correct_persons[ids[0]])
+                'Error in deleting person: equality error: ' + str(person) + ' != ' + str(correct_persons[ids[0]]))
     except Exception as e:
         assert False, 'Exception in deleting person: ' + str(e)
 
@@ -100,7 +101,8 @@ async def test_update_by_id_success():
             work=None
         )
         person = PersonService.update_person(update_data, ids[0], test_db).get_json_model()
-        assert not check_equality(person, correct_persons[ids[0]]), 'Error in updating person (success): ' + person + ' is equal ' + correct_persons[ids[0]]
+        assert not check_equality(person, correct_persons[ids[0]]), 'Error in updating person (success): ' + str(person) \
+                                                                    + ' is equal ' + str(correct_persons[ids[0]])
     except Exception as e:
         assert False, 'Exception in updating person: ' + str(e)
 
