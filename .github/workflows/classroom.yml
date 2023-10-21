@@ -58,7 +58,6 @@ jobs:
             cd /home/${{ secrets.SSH_USER }}/person_service
             echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose down
             echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker rmi person_service
-            echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose build
             echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose up -d
         
           
