@@ -30,7 +30,7 @@ def init_db(database: Database, init_data: list):
             work=data['work']
         )
         person = PersonService.create_person(person_dto, db).get_json_model()
-        assert check_equality(person, data), 'Initial error: ' + person + " != " + data
+        assert check_equality(person, data), print('Initial error: ' + person + " != " + data)
         data['id'] = person['id']
 
 
