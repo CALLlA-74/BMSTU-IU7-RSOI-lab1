@@ -5,12 +5,14 @@ from database.database import Database
 from schemas import PersonDTO
 from fastapi.exceptions import HTTPException
 from fastapi import status
+from sqlalchemy.orm import Session
 import services as PersonService
 
 persons = deepcopy(PersonsMock.mocks)
 correct_persons = {}
-test_db = Database("sqlite:///test_persons.db")
-test_db.create_all()
+test_database = Database("sqlite:///test_persons.db")
+test_database.create_all()
+test_db = next(test_database.get_db())
 
 
 def check_equality(a: dict, b: dict):
@@ -20,8 +22,7 @@ def check_equality(a: dict, b: dict):
             a['work'] == b['work'])
 
 
-def init_db(database: Database, init_data: list):
-    db = next(database.get_db())
+def init_db(db: Session, init_data: list):
     for data in init_data:
         person_dto = PersonDTO(
             name=data['name'],
@@ -45,7 +46,7 @@ init_correct_persons(persons, correct_persons)
 
 async def test_get_all_persons_success():
     try:
-        all_persons = PersonService.get_all_persons(test_db.get_db())
+        all_persons = PersonService.get_all_persons(test_db)
         assert len(all_persons) == len(correct_persons), 'Error getting all persons: ' + str(
             len(all_persons)) + ' != ' + str(len(correct_persons))
         for idx in range(len(all_persons)):
@@ -60,7 +61,7 @@ async def test_get_all_persons_success():
 async def test_get_by_id_success():
     try:
         for person in persons:
-            recieved_person = PersonService.get_person(person['id'], test_db.get_db()).get_json_model()
+            recieved_person = PersonService.get_person(person['id'], test_db).get_json_model()
             assert (check_equality(recieved_person, person),
                     'Error in getting person by id (success): equality error ' + recieved_person + ' ' + correct_persons[person['id']])
     except Exception as e:
@@ -69,7 +70,7 @@ async def test_get_by_id_success():
 
 async def test_get_by_id_not_found():
     try:
-        PersonService.get_person(max(correct_persons.keys()) + 1, test_db.get_db())
+        PersonService.get_person(max(correct_persons.keys()) + 1, test_db)
         assert False, 'Error in getting all person by id (not_found): no 404 exception'
     except HTTPException as e:
         if e.status_code == status.HTTP_404_NOT_FOUND:
@@ -82,7 +83,7 @@ async def test_get_by_id_not_found():
 async def test_delete_by_id_success():
     try:
         ids = correct_persons.keys()
-        person = PersonService.delete_person(ids[0], test_db.get_db()).get_json_model()
+        person = PersonService.delete_person(ids[0], test_db).get_json_model()
         assert (check_equality(person, correct_persons[ids[0]]),
                 'Error in deleting person: equality error: ' + person + ' != ' + correct_persons[ids[0]])
     except Exception as e:
@@ -98,7 +99,7 @@ async def test_update_by_id_success():
             address="New York",
             work=None
         )
-        person = PersonService.update_person(update_data, ids[0], test_db.get_db()).get_json_model()
+        person = PersonService.update_person(update_data, ids[0], test_db).get_json_model()
         assert not check_equality(person, correct_persons[ids[0]]), 'Error in updating person (success): ' + person + ' is equal ' + correct_persons[ids[0]]
     except Exception as e:
         assert False, 'Exception in updating person: ' + str(e)
@@ -113,7 +114,7 @@ async def test_update_by_id_not_found():
             work=None
         )
         id = max(correct_persons.keys()) + 1
-        PersonService.update_person(update_data, id, test_db.get_db()).get_json_model()
+        PersonService.update_person(update_data, id, test_db).get_json_model()
         assert False, 'in updating person (not found): no 404 exception'
     except HTTPException as e:
         if e.status_code == status.HTTP_404_NOT_FOUND:
