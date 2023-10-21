@@ -62,9 +62,9 @@ async def test_get_by_id_success():
     try:
         for person in persons:
             recieved_person = PersonService.get_person(person['id'], test_db).get_json_model()
-            assert (check_equality(recieved_person, person),
-                    'Error in getting person by id (success): equality error ' + str(recieved_person) + ' '
-                    + str(correct_persons[person['id']]))
+            assert check_equality(recieved_person, person), 'Error in getting person by id (success): equality error ' \
+                                                            + str(recieved_person) + ' ' \
+                                                            + str(correct_persons[person['id']])
     except Exception as e:
         assert False, 'Exception in getting all person by id (success): ' + str(e)
 
@@ -84,17 +84,17 @@ async def test_get_by_id_not_found():
 
 async def test_delete_by_id_success():
     try:
-        ids = correct_persons.keys()
+        ids = list(correct_persons.keys())
         person = PersonService.delete_person(ids[0], test_db).get_json_model()
-        assert (check_equality(person, correct_persons[ids[0]]),
-                'Error in deleting person: equality error: ' + str(person) + ' != ' + str(correct_persons[ids[0]]))
+        assert check_equality(person, correct_persons[ids[0]]), 'Error in deleting person: equality error: ' \
+                                                                + str(person) + ' != ' + str(correct_persons[ids[0]])
     except Exception as e:
         assert False, 'Exception in deleting person: ' + str(e)
 
 
 async def test_update_by_id_success():
     try:
-        ids = correct_persons.keys()
+        ids = list(correct_persons.keys())
         update_data = PersonDTO(
             name="Martin",
             age=22,

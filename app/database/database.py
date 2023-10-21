@@ -29,8 +29,6 @@ class Database:
             db.close_all()
 
 
-#app_db = Database()
-
 """DB_URL = get_db_url()   # "sqlite:///../postgres/persons.db"
 
 engine = create_engine(DB_URL)  # connect_args={"check_same_thread": False}
