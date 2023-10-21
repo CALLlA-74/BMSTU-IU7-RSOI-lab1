@@ -85,7 +85,7 @@ async def test_get_by_id_not_found():
 async def test_delete_by_id_success():
     try:
         ids = list(correct_persons.keys())
-        num_of_rem_rows = PersonService.delete_person(ids[-1], test_db).get_json_model()
+        num_of_rem_rows = PersonService.delete_person(ids[-1], test_db)
         assert num_of_rem_rows == 1, 'Error in deleting person: number of removed persons is not 1: ' \
                                      + str(num_of_rem_rows)
     except Exception as e:
