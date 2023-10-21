@@ -76,7 +76,8 @@ async def test_get_by_id_not_found():
     except HTTPException as e:
         if e.status_code == status.HTTP_404_NOT_FOUND:
             assert True
-        assert False, 'HTTPException in getting all person by id (not_found): HTTPException is not 404: ' + str(e.detail)
+        else:
+            assert False, 'HTTPException in getting all person by id (not_found): HTTPException is not 404: ' + str(e.detail)
     except Exception as e:
         assert False, 'Exception in getting all person by id (not_found): ' + str(e)
 
@@ -121,6 +122,7 @@ async def test_update_by_id_not_found():
     except HTTPException as e:
         if e.status_code == status.HTTP_404_NOT_FOUND:
             assert True
-        assert False, 'HttpException in updating person: is not 404 exception ' + str(e)
+        else:
+            assert False, 'HttpException in updating person: is not 404 exception ' + str(e)
     except Exception as e:
         assert False, 'Exception in updating person: is not 404 exception ' + str(e)
