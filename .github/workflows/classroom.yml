@@ -7,7 +7,7 @@ on:
     branches:
       - master
 jobs:
-  build:
+  unit-tests:
     name: Run unit tests
     runs-on: ubuntu-latest
     steps:
@@ -25,6 +25,25 @@ jobs:
         
       - name: Run unit tests
         run: pytest -vs app/unit_tests/tests.py
+        
+  deploy:
+    name: Deploy Persons service on remote VM
+    needs: [unit-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+        
+      - uses: appleboy/scp-action@v0.1.4
+        with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        port: ${{ secrets.SSH_PORT }}
+        source: "app,Dockerfile,docker-compose.yml,requirements.txt"
+        target: /deploy/${{ secrets.SSH_USER }}/person_service
+        
           
     
     #name: Run API Tests
