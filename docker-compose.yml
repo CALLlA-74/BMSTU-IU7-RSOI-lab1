@@ -21,12 +21,11 @@ services:
       retries: 1
 
   person_service:
+    image: person_service
     build: .
     depends_on:
       database:
         condition: service_healthy
-    #environment:
-      #WAIT_HOSTS: database:5432
     ports:
       - "8080:8080"
     networks:
