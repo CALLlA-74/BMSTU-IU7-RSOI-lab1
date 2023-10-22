@@ -35,7 +35,9 @@ def get_openapi_schema():
 app = FastAPI(title="OpenAPI definition",
               version="v1",
               servers=[{"url": "http://111.222.0.3:8080"},
-                       {"url": "http://localhost:8080"}])
+                       #{"url": "http://localhost:8080"}
+                       ]
+              )
 app.include_router(PersonRouter, prefix='/api/v1/persons')
 app.openapi = get_openapi_schema
 app_db = AppDatabase.app_db
