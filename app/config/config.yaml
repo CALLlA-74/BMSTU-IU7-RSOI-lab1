@@ -6,7 +6,7 @@ postgres_db:
   port: 5432
 
 persons_app:
-  host: "95.163.210.40" #"0.0.0.0"
+  host: "0.0.0.0"
   port: 8080
   log_level: "info"
   reload: True
