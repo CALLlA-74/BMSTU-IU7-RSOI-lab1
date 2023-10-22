@@ -62,18 +62,19 @@ jobs:
             echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose up -d
         
           
+  api-test:
+    name: Run API Tests
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
     
-    #name: Run API Tests
-    #runs-on: ubuntu-latest
-    #steps:
-    #  - uses: actions/checkout@v4
-    #    with:
-    #      fetch-depth: 0
-    #
-    #  - name: Run API Tests
-    #    uses: matt-ball/newman-action@master
-    #    with:
-    #      collection: postman/[inst] Lab1.postman_collection.json
-    #      environment: postman/[inst][heroku] Lab1.postman_environment.json
-    #      delayRequest: 100
-    #      reporters: '[ "cli" ]'
+      - name: Run API Tests
+        uses: matt-ball/newman-action@master
+        with:
+          collection: postman/[inst] Lab1.postman_collection.json
+          environment: postman/[inst][heroku] Lab1.postman_environment.json
+          delayRequest: 15
+          reporters: '[ "cli" ]'
